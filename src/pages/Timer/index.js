@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 // import { Container } from './styles';
 
 export default class Timer extends Component {
@@ -17,11 +18,11 @@ export default class Timer extends Component {
       {
         start: {
           minutes: 0,
-          seconds: 12,
+          seconds: 2,
         },
         current: {
           minutes: 0,
-          seconds: 12,
+          seconds: 2,
         },
       },
     ],
@@ -35,7 +36,9 @@ export default class Timer extends Component {
       const newCrons = crons.map(cron => {
         const newCron = cron;
         if (newCron.current.seconds === 0 && newCron.current.minutes === 0) {
-        } else if (newCron.current.seconds > 0) {
+          return newCron;
+        }
+        if (newCron.current.seconds > 0) {
           newCron.current.seconds -= 1;
         } else if (newCron.current.seconds === 0) {
           newCron.current.minutes -= 1;
@@ -56,7 +59,7 @@ export default class Timer extends Component {
   }
 
   render() {
-    const { crons, soundStatus } = this.state;
+    const { crons } = this.state;
     return (
       <>
         {crons.map(({ current }, index) => (
@@ -75,3 +78,6 @@ export default class Timer extends Component {
     );
   }
 }
+Timer.propTypes = {
+  onTimeOver: PropTypes.func.isRequired,
+};
